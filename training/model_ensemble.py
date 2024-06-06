@@ -15,7 +15,6 @@ import torchvision.models as models
 import json
 
 
-
 class MyEnsemble(nn.Module):
     def __init__(self, modelA, modelB, input):
         super(MyEnsemble, self).__init__()
@@ -46,10 +45,9 @@ class MyEnsemble(nn.Module):
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Using {device} device")
 
-data_dir = 'C:/Users/43477/Desktop/Yolo_Crop/SWEDEN_crops'  # Replace this with the path to your data
-#data_dir = 'C:/Users/43477/Desktop/Antarctica_crops'
+data_dir = '../Yolo_Crop/SWEDEN_crops'  # Replace this with the path to your data
 
-save_dir = 'C:/Users/43477/Desktop/Training/saved_models/model_ensemble'
+save_dir = './saved_models/model_ensemble'
 os.makedirs(save_dir, exist_ok=True)
 
 transform = transforms.Compose([
@@ -58,50 +56,40 @@ transform = transforms.Compose([
     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
 ])
 
-dataset = datasets.ImageFolder(root=data_dir, transform=transform)
-
-
-
-#indices = list(range(len(dataset)))
-#train_indices, test_indices = train_test_split(indices, test_size=0.2, stratify=[label for _, label in dataset], random_state=42)   
+dataset = datasets.ImageFolder(root=data_dir, transform=transform) 
 
 with open('C:/Users/43477/Desktop/Training/saved_models/train_ind.json', 'r') as f:
     train_indices = json.load(f)
 
 with open('C:/Users/43477/Desktop/Training/saved_models/test_ind.json', 'r') as f:
     test_indices = json.load(f)
-
-    
+   
 train_sampler = SubsetRandomSampler(train_indices)
 test_sampler = SubsetRandomSampler(test_indices)
 
 # DataLoader
 batch_size = 8
-
 train_loader = DataLoader(dataset, batch_size=batch_size, sampler=train_sampler)
 test_loader = DataLoader(dataset, batch_size=batch_size, sampler=test_sampler)
 
-
 num_classes = len(dataset.classes)
 print(num_classes)
-
 
 model1 = models.resnet101()
 num_features1 = model1.fc.in_features
 model1.fc = nn.Linear(num_features1, num_classes)
 
-path_checkpoint1 = "C:/Users/43477/Desktop/Training/saved_models/resnet101/resnet101.pt" 
+path_checkpoint1 = "./saved_models/resnet101/best_resnet101.pt" 
 #checkpoint = torch.load(path_checkpoint1)
 #model1.load_state_dict(checkpoint['net'])
 model1.load_state_dict(torch.load(path_checkpoint1))
-
 
 
 model2 = models.densenet169()
 num_features2 = model2.classifier.in_features
 model2.classifier = nn.Linear(num_features2, num_classes)
 
-path_checkpoint2 = "C:/Users/43477/Desktop/Training/saved_models/densenet169/model_epoch7.pt" 
+path_checkpoint2 = "./saved_models/densenet169/best_densenet169.pt" 
 checkpoint = torch.load(path_checkpoint2)
 model2.load_state_dict(checkpoint['net'])
 
@@ -115,12 +103,11 @@ criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.0001)
 
 
-
 start_epoch = -1
-RESUME = True
+RESUME = False
 
 if RESUME:
-    path_checkpoint = "C:/Users/43477/Desktop/Training/saved_models/model_ensemble/model_epoch16.pt" 
+    path_checkpoint = "./saved_models/model_ensemble/model_epoch1.pt" 
     checkpoint = torch.load(path_checkpoint)
 
     model.load_state_dict(checkpoint['net']) 
