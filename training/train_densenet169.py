@@ -21,7 +21,7 @@ print(f"Using {device} device")
 
 data_dir = '../Yolo_Crop/SWEDEN_crops'  # Replace this with the path to your data
 
-save_dir = 'C:/Users/43477/Desktop/Training/saved_models/densenet169'
+save_dir = './saved_models/densenet169'
 os.makedirs(save_dir, exist_ok=True)
 
 transform = transforms.Compose([
