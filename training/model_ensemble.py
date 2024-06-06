@@ -25,11 +25,9 @@ class MyEnsemble(nn.Module):
         self.modelB = modelB
         for param in modelB.parameters():
             param.requires_grad = False
-
-        
+ 
         self.modelA.fc = nn.Identity() 
         self.modelB.classifier = nn.Identity() 
-
 
         self.fc1 = nn.Linear(input, 507)
 
@@ -38,7 +36,6 @@ class MyEnsemble(nn.Module):
         out1 = out1.view(out1.size(0),-1)
         out2 = self.modelB(x)
         out2 = out2.view(out2.size(0),-1)
-
 
         out = torch.cat((out1,out2), dim=1)
 
