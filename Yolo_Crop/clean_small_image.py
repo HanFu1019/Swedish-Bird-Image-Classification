@@ -1,7 +1,7 @@
 import os
 from PIL import Image
 
-main_folder = 'C:/Users/43477/Desktop/Yolo_Crop/crops/'
+main_folder = './crops/'
 
 #count = 0
 
