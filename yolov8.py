@@ -7,13 +7,12 @@ import os
 ultralytics.checks()
 
 model = YOLO('yolov8n.pt')
-#results = model.predict(source="C:/Users/43477/Desktop/Antarctica_Dataset/Ardenna tenuirostris", save_txt=True, max_det=1, classes=14, name="111")
 
 '''
 **********************************************
 Change the dataset path
 '''
-parent_folder = 'C:/Users/43477/Desktop/SWEDEN/'
+parent_folder = '../Dataset/SWEDEN/'
 
 subfolders = [f.name for f in os.scandir(parent_folder) if f.is_dir()]
 
@@ -25,11 +24,11 @@ print("Total species: ", len(subfolders))
 
 '''
 **********************************************
-Change the output_folder path which save the bounding box .txt file
+Change the output_folder path which saves the bounding box .txt file
 '''
 
 for folder in subfolders:
-    output_folder = 'C:/Users/43477/Desktop/Yolo_Crop/runs/detect'
+    output_folder = './runs/detect'
     output_folder = os.path.join(output_folder, folder)
     if os.path.exists(output_folder):
         print(output_folder, " : Done!")
