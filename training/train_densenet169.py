@@ -19,8 +19,7 @@ import json
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Using {device} device")
 
-data_dir = 'C:/Users/43477/Desktop/Yolo_Crop/SWEDEN_crops'  # Replace this with the path to your data
-#data_dir = 'C:/Users/43477/Desktop/Antarctica_crops'
+data_dir = '../Yolo_Crop/SWEDEN_crops'  # Replace this with the path to your data
 
 save_dir = 'C:/Users/43477/Desktop/Training/saved_models/densenet169'
 os.makedirs(save_dir, exist_ok=True)
@@ -32,8 +31,6 @@ transform = transforms.Compose([
 ])
 
 dataset = datasets.ImageFolder(root=data_dir, transform=transform)
-
-
 
 #indices = list(range(len(dataset)))
 #train_indices, test_indices = train_test_split(indices, test_size=0.2, stratify=[label for _, label in dataset], random_state=42)   
@@ -54,13 +51,8 @@ batch_size = 16
 train_loader = DataLoader(dataset, batch_size=batch_size, sampler=train_sampler)
 test_loader = DataLoader(dataset, batch_size=batch_size, sampler=test_sampler)
 
-
 num_classes = len(dataset.classes)
 print(num_classes)
-
-
-
-
 
 
 model = models.densenet169(pretrained=True)
@@ -75,10 +67,10 @@ optimizer = optim.Adam(model.parameters(), lr=0.0001)
 model.to(device)
 
 start_epoch = -1
-RESUME = True
+RESUME = False
 
 if RESUME:
-    path_checkpoint = "C:/Users/43477/Desktop/Training/saved_models/densenet169/model_epoch3.pt" 
+    path_checkpoint = "./saved_models/densenet169/model_epoch1.pt" 
     checkpoint = torch.load(path_checkpoint)
 
     model.load_state_dict(checkpoint['net']) 
