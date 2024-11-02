@@ -14,7 +14,7 @@ This project utilizes deep learning techniques to automate bird species identifi
 Bird species identification is critical for fields such as conservation biology, ecology, and biodiversity research. Traditional identification methods are often labor-intensive and prone to human error. This project automates the identification process using Convolutional Neural Networks (CNNs), which can handle large image datasets with high precision. High-quality datasets from eBird and YOLOv8 for image standardization provide a strong foundation for robust, scalable bird identification models.
 
 ## Scraper
-This project contains a series of scripts located in the `scraper` folder designed to scrape bird images from a specified location. To use the scraper, follow these steps in order:
+This project contains a series of scripts located in the [`scraper`](scraper) folder designed to scrape bird images from a specified location. To use the scraper, follow these steps in order:
 
 1. **Get Bird List**: Run [`1_birds_list.py`](scraper/1_birds_list.py) to fetch a list of bird species for a specified country. To find the location code to use, visit [eBird Explore](https://ebird.org/explore) and enter your region in the "Enter a region" box. The species will be saved in `ebird_species.txt`, which contains the identifiers needed for the following steps.
 
