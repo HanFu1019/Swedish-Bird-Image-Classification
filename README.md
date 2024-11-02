@@ -4,6 +4,7 @@ This project utilizes deep learning techniques to automate bird species identifi
 
 ## Table of Contents
 - [Introduction](#introduction)
+- [Scraper](#scraper)
 - [Dataset](#dataset)
 - [Models and Methods](#models-and-methods)
 - [Results](#results)
